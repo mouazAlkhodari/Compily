@@ -5,6 +5,10 @@ import java.util.ArrayList;
 public class FunctionDef {
 
 	String name;
+
+	ArrayList<String> params = new ArrayList<String>();
+	AbstractTreeNode root;
+
 	public String getName() {
 		return name;
 	}
@@ -20,7 +24,5 @@ public class FunctionDef {
 	public ArrayList<String> getParams() {
 		return params;
 	}
-	ArrayList<String> params = new ArrayList<String>();
-	AbstractTreeNode root;
 
 }
