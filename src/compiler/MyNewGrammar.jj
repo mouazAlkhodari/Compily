@@ -65,7 +65,6 @@ TOKEN :
 | < CMP: ">" | "<" | ">=" | "<=" | "=" | "<>" >
 | < FUNC: "func" >
 | < ID: (["a"-"z"]|["A"-"Z"])(["a"-"z"]|["A"-"Z"]|["0"-"9"])* >
-| < DEF: "def" >
 }
 
 BlockNode start():
@@ -243,16 +242,15 @@ ForNode forStmt():
 
 AssignNode assignStmt():
 {
-  Token t1, t2;
+  Token t;
   AssignNode anode = new AssignNode();
-  AbstractTreeNode n1;
+  AbstractTreeNode n;
 }
 {
-	t1 = < ID > <ASSIGN > n1 = E() < SEMI >
-	| < DEF > t2 = < ID > < COLON > < SEMI >
+	t = < ID > <ASSIGN > n = E() < SEMI >
 	{
-	  anode.setVarName(t1.image);
-	  anode.addChild(n1);
+	  anode.setVarName(t.image);
+	  anode.addChild(n);
 	  return anode;
 	}
 }
