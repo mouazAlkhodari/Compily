@@ -1,5 +1,7 @@
 package nodes;
 
+import javax.print.DocFlavor;
+
 public class ExpressionNode extends AbstractTreeNode {
 
 	@Override
@@ -22,17 +24,75 @@ public class ExpressionNode extends AbstractTreeNode {
 
 	@Override
 	public Object execute(Context context) {
-		double d1 = (Double)children.get(0).execute(context);
-		double d2 = (Double)children.get(1).execute(context);
-		switch(operator) {
-		case "+":
-			return d1 + d2;
-		case "-":
-			return d1 - d2;
-		case "*":
-			return d1 * d2;
-		case "/":
-			return d1 / d2;
+
+		Object val1 = children.get(0).execute(context);
+		Object val2 = children.get(1).execute(context);
+
+		if(val1 instanceof Integer && val2 instanceof Integer){
+			int d1 = (int) val1;
+			int d2 = (int) val2;
+			switch(operator) {
+				case "+":
+					return d1 + d2;
+				case "-":
+					return d1 - d2;
+				case "*":
+					return d1 * d2;
+				case "/":
+					return d1 / d2;
+			}
+		}
+		else if(val1 instanceof Float && val2 instanceof Float){
+			float d1 = (float) val1;
+			float d2 = (float) val2;
+			switch(operator) {
+				case "+":
+					return d1 + d2;
+				case "-":
+					return d1 - d2;
+				case "*":
+					return d1 * d2;
+				case "/":
+					return d1 / d2;
+			}
+		}
+		else if(val1 instanceof Double && val2 instanceof Double){
+			double d1 = (Double) val1;
+			double d2 = (Double) val2;
+			switch(operator) {
+				case "+":
+					return d1 + d2;
+				case "-":
+					return d1 - d2;
+				case "*":
+					return d1 * d2;
+				case "/":
+					return d1 / d2;
+			}
+		}
+		else if(val1 instanceof String && val2 instanceof String){
+			String d1 = (String) val1;
+			String d2 = (String) val2;
+			switch(operator) {
+				case "+":
+					return d1 + d2;
+				default:
+					throw new RuntimeException("Invalid operator on strings man :( !!!");
+			}
+		}
+		else if(val1 instanceof Character && val2 instanceof Character){
+			char d1 = (char) val1;
+			char d2 = (char) val2;
+			switch(operator) {
+				case "+":
+					return d1 + d2;
+				case "-":
+					return d1 - d2;
+				case "*":
+					return d1 * d2;
+				case "/":
+					return d1 / d2;
+			}
 		}
 		return null;
 	}

@@ -21,7 +21,7 @@ public class AssignNode extends AbstractTreeNode {
 	@Override
 	public Object execute(Context context) {
 		
-		context.getVars().put(varName, (Double)children.get(0).execute(context));
+		context.getVars().put(varName, children.get(0).execute(context));
 		
 		return null;
 	}

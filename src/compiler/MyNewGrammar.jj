@@ -22,7 +22,9 @@ public class MyNewGrammar
     AbstractTreeNode n = start();
 
     // Run Code:
-    //n.execute(new Context());
+    n.execute(new Context());
+
+    System.out.println("\n-----------------------------------\n");
 
     // Convert Code:
     String code = (String)n.convert(new Context());
@@ -48,7 +50,7 @@ TOKEN : /* OPERATORS */
 
 TOKEN :
 {
-  < NUM : (< DIGIT >)+ >
+  < NUM : (< DIGIT >)+ ("." (<DIGIT>)+)? >
 | < #DIGIT : [ "0"-"9" ] >
 | < LP: "(" >
 | < RP: ")" >
@@ -64,7 +66,7 @@ TOKEN :
 | < FOR: "&" >
 | < CMP: ">" | "<" | ">=" | "<=" | "=" | "<>" >
 | < DEF: "def" >
-| < TYPE: "int"|"char"|"float"|"string">
+| < TYPE: "int"|"char"|"float"|"string" | "double">
 | < FUNC: "func" >
 | < ID: (["a"-"z"]|["A"-"Z"])(["a"-"z"]|["A"-"Z"]|["0"-"9"])* >
 }
@@ -157,7 +159,7 @@ ExpressionNode N():
     if (t1 != null)
     {
       ConstantNode cn = new ConstantNode();
-      cn.setValue(Double.parseDouble(t1.image));
+      cn.setValue(t1.image);
       return cn;
     }
     else if (n != null)

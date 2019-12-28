@@ -15,7 +15,9 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     AbstractTreeNode n = start();
 
     // Run Code:
-    //n.execute(new Context());
+    n.execute(new Context());
+
+    System.out.println("\u005cn-----------------------------------\u005cn");
 
     // Convert Code:
     String code = (String)n.convert(new Context());
@@ -171,7 +173,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     if (t1 != null)
     {
       ConstantNode cn = new ConstantNode();
-      cn.setValue(Double.parseDouble(t1.image));
+      cn.setValue(t1.image);
       {if (true) return cn;}
     }
     else if (n != null)
@@ -541,12 +543,6 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     finally { jj_save(3, xla); }
   }
 
-  static private boolean jj_3R_12() {
-    if (jj_scan_token(FUNC)) return true;
-    if (jj_scan_token(ID)) return true;
-    return false;
-  }
-
   static private boolean jj_3R_10() {
     if (jj_scan_token(ID)) return true;
     if (jj_scan_token(ASSIGN)) return true;
@@ -581,6 +577,12 @@ public class MyNewGrammar implements MyNewGrammarConstants {
 
   static private boolean jj_3R_11() {
     if (jj_scan_token(DEF)) return true;
+    if (jj_scan_token(ID)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_12() {
+    if (jj_scan_token(FUNC)) return true;
     if (jj_scan_token(ID)) return true;
     return false;
   }

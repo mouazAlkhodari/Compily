@@ -32,6 +32,7 @@ public class DefNode extends AbstractTreeNode{
         else if(type_num.equals("float")){float a=0.0f; context.getVars().put(varName, a);}
         else if(type_num.equals("char")){char a=' '; context.getVars().put(varName, a);}
         else if(type_num.equals("string")){String a=""; context.getVars().put(varName, a);}
+        else if(type_num.equals("double")){double a=0; context.getVars().put(varName, a);}
 
         return null;
     }
@@ -43,6 +44,7 @@ public class DefNode extends AbstractTreeNode{
         else if(type_num.equals("float")){return "float " + varName + "=0;";}
         else if(type_num.equals("char")){return "char " + varName + "=' ';";}
         else if(type_num.equals("string")){return "string " + varName + "=\"\";";}
+        else if(type_num.equals("double")){return "double " + varName + "=0;";}
 
         return "dataType " + varName + "=0;";
     }

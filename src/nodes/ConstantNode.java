@@ -8,14 +8,31 @@ public class ConstantNode extends ExpressionNode {
 		return value + "";
 	}
 	
-	double value;
+	Object value;
 	
-	public double getValue() {
+	public Object getValue() {
 		return value;
 	}
 
-	public void setValue(double value) {
-		this.value = value;
+	public void setValue(String value)
+	{
+		try
+		{
+			int v = Integer.parseInt(value);
+			this.value = v;
+		}
+		catch (NumberFormatException e)
+		{
+			try
+			{
+				float vv = Float.parseFloat(value);
+				this.value = vv;
+			}
+			catch (NumberFormatException ee)
+			{
+				throw new RuntimeException("Invalid Number Type man !!!");
+			}
+		}
 	}
 
 	@Override
