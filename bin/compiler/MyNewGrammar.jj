@@ -1,0 +1,353 @@
+
+options
+{
+  static = true;
+}
+
+PARSER_BEGIN(MyNewGrammar)
+package compiler;
+import java.io.*;
+import nodes.*;
+import java.util.HashMap;
+
+public class MyNewGrammar
+{
+
+  static HashMap<String,FunctionDef> functions = new HashMap<String,FunctionDef>(); 
+  
+  public static void main(String args []) throws ParseException,FileNotFoundException
+  {
+    FileInputStream fis = new FileInputStream("C:\\Users\\hp\\Desktop\\SAMI\\Faculty of Information Technology\\Fourth_Year\\deleteCode.txt");
+    MyNewGrammar parser = new MyNewGrammar(fis);
+    AbstractTreeNode n = start();
+
+    // Run Code:
+    //n.execute(new Context());
+
+    // Convert Code:
+    String code = (String)n.convert(new Context());
+    System.out.println(code);
+  }
+}
+
+PARSER_END(MyNewGrammar)
+
+SKIP :
+{
+  " "
+| "\r"
+| "\t"    
+| "\n"
+}
+
+TOKEN : /* OPERATORS */
+{
+  < PLUS : "+" | "-" >
+| < MULT : "*" | "/" >
+}
+
+TOKEN :
+{
+  < NUM : (< DIGIT >)+ >
+| < #DIGIT : [ "0"-"9" ] >
+| < LP: "(" >
+| < RP: ")" >
+| < ASSIGN: ":=" | "+=" | "*=" >
+| < RARROW: "->" >
+| < LARROW: "<-" >
+| < SEMI: ";" >
+| < COLON: ":" >
+| < IF: "?" >
+| < ELSE: "??" >
+| < END: "!" >
+| < WHILE: "@" >
+| < FOR: "&" >
+| < CMP: ">" | "<" | ">=" | "<=" | "=" | "<>" >
+| < FUNC: "func" >
+| < ID: (["a"-"z"]|["A"-"Z"])(["a"-"z"]|["A"-"Z"]|["0"-"9"])* >
+}
+
+BlockNode start():
+{
+  BlockNode n = new BlockNode();
+  AbstractTreeNode c;
+}
+{
+  (
+    c = stmt() {n.addChild(c); }
+  )+< EOF >
+  {
+    return n;
+  }
+}
+
+ExpressionNode E():
+{
+  Token t = null;
+  ExpressionNode n1, n2 = null;
+}
+{
+  n1 = F() (t = < PLUS > n2 = E() )?
+  {
+    if (t == null)
+    	return n1;
+    else
+    {
+      	ExpressionNode en = new ExpressionNode();
+      	en.addChild(n1);
+      	en.addChild(n2);
+      	en.setOperator(t.image);
+      	return en;
+    }
+  }
+}
+
+
+ExpressionNode F():
+{
+  Token t = null;
+  ExpressionNode n1,n2 = null;
+}
+{
+  n1 = N()(t=< MULT > n2 = F())?
+    {
+    if (t == null)
+    	return n1;
+    else
+    {
+      	ExpressionNode en = new ExpressionNode();
+      	en.addChild(n1);
+      	en.addChild(n2);
+      	en.setOperator(t.image);
+      	return en;
+    }
+  }
+}
+
+FuncCallNode FuncCall():
+{
+  FuncCallNode node = new FuncCallNode();
+  Token t;
+  AbstractTreeNode n;
+}
+{
+  t = < ID ><LP >(n = E() {node.addChild(n); }
+  ("," n = E() {node.addChild(n); })*)? < RP >
+  {
+    node.setFunctionName(t.image);
+    node.setFunctions(functions);
+    return node;
+  }
+}
+
+ExpressionNode N():
+{
+  Token t1 = null, t2 = null;
+  ExpressionNode n= null;
+}
+{
+  (
+    t1 = < NUM > | < LP > n = E() < RP >
+  | LOOKAHEAD(2) n = FuncCall()
+     | t2 = < ID >
+  )
+  {
+    if (t1 != null)
+    {
+      ConstantNode cn = new ConstantNode();
+      cn.setValue(Double.parseDouble(t1.image));
+      return cn;
+    }
+    else if (n != null)
+    	return n;
+    else
+    {
+      VariableNode vn = new VariableNode();
+      vn.setName(t2.image);
+      return vn;
+    }
+  }
+}
+
+IfNode ifStmt():
+{
+  IfNode res = new IfNode();
+  AbstractTreeNode n, nn;
+  BlockNode cn = new BlockNode();
+  BlockNode en = null;
+}
+{
+  < IF > <LP >n = condition()< RP >
+  (
+    nn = stmt()
+    {
+      cn.addChild(nn);
+    }
+  )+
+  (
+    < ELSE > {en = new BlockNode(); } ( nn = stmt() {en.addChild(nn); })+
+  )?
+  < END >
+  {
+    res.addChild(n);
+    res.addChild(cn);
+    if (en != null)
+    	res.addChild(en);
+    return res;
+  }
+} 
+
+WhileNode whileStmt():
+{
+  WhileNode wnode = new WhileNode();
+  BlockNode bnode = new BlockNode();
+  AbstractTreeNode n,s;
+}
+{
+  < WHILE ><LP > n = condition()< RP >
+  (
+    s = stmt() { bnode.addChild(s); }
+  )+
+  < END >
+  {
+    wnode.addChild(n);
+    wnode.addChild(bnode);
+    return wnode;
+  }
+}
+
+ForNode forStmt():
+{
+  ForNode res = new ForNode();
+  Token t;
+  AbstractTreeNode n1,n2, n4 = null, tmp;
+  BlockNode n3 = new BlockNode();
+}
+{
+	< FOR > t = <ID ><COLON >n1 = E()< RARROW > n2 = E()(< COLON > n4 = E())?
+	(
+	  tmp = stmt() { n3.addChild(tmp); }
+	)+
+	< END >
+	{
+	  res.addChild(n1);
+	  res.addChild(n2);
+	  res.addChild(n3);
+	  res.setVarName(t.image);
+	  if (n4 != null)
+	  	res.addChild(n4);
+	  return res;
+	}
+}
+
+AssignNode assignStmt():
+{
+  Token t;
+  AssignNode anode = new AssignNode();
+  AbstractTreeNode n;
+}
+{
+	t = < ID > <ASSIGN > n = E() < SEMI >
+	{
+	  anode.setVarName(t.image);
+	  anode.addChild(n);
+	  return anode;
+	}
+}
+
+ReadNode readStmt():
+{
+  ReadNode n = new ReadNode();
+  Token t;
+}
+{
+	< RARROW > t=  <ID > <SEMI >
+	{
+	  n.setVarName(t.image);
+	  return n;
+	}
+}
+
+WriteNode writeStmt():
+{
+  WriteNode n = new WriteNode();
+  AbstractTreeNode nn;
+}
+{
+	< LARROW > nn = E() < SEMI >
+	{
+	  n.addChild(nn);
+	  return n;
+	}
+}
+
+ConditionNode condition():
+{
+  ConditionNode n = new ConditionNode();
+  AbstractTreeNode n1,n2;
+  Token t;
+}
+{
+	n1 = E() t = < CMP > n2 = E()
+	{
+	  n.addChild(n1);
+	  n.addChild(n2);
+	  n.setOperator(t.image);
+	  return n;
+	} 
+}
+
+AbstractTreeNode stmt():
+{
+  AbstractTreeNode n = null;
+}
+{
+  try
+  {
+  (
+    n = ifStmt() | n = whileStmt() | n = forStmt() | n = assignStmt() | n = readStmt()
+|  n = writeStmt() | FuncDef()
+
+)
+}
+catch(ParseException e)
+{
+  System.out.println(e);
+  Token t;
+  do
+  {
+    t = getNextToken();
+  }
+  while(t.kind != SEMI);
+}
+{
+  if (n == null)
+  	n = new BlockNode();
+  return n;
+}
+}
+
+void FuncDef():
+{
+  FunctionDef fd = new FunctionDef();
+  Token name,t = null;
+  BlockNode n = new BlockNode();
+  AbstractTreeNode an;
+}
+{
+	< FUNC > name = <ID ><RARROW >
+	< LP > (t = < ID > {fd.getParams().add(t.image); }
+	("," t = < ID > {fd.getParams().add(t.image); } )*)? < RP >
+	(
+	  an = stmt()
+		{
+		  n.addChild(an);
+		}
+	  ) *
+	< END >
+	{
+	  fd.setName(name.image);
+	  fd.setRoot(n);
+	  functions.put(fd.getName(),fd);
+	}
+}
