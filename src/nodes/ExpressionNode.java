@@ -94,6 +94,9 @@ public class ExpressionNode extends AbstractTreeNode {
 					return d1 / d2;
 			}
 		}
+		else{
+			throw new RuntimeException("Inconsistency in Expresssion params man !!!");
+		}
 		return null;
 	}
 
