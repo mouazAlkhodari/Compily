@@ -15,11 +15,11 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     AbstractTreeNode n = start();
 
     // Run Code:
-    n.execute(new Context());
+    //n.execute(new Context());
 
     // Convert Code:
-//    String code = (String)n.convert(new Context());
-//    System.out.println(code);
+    String code = (String)n.convert(new Context());
+    System.out.println(code);
   }
 
   static final public BlockNode start() throws ParseException {
@@ -35,6 +35,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
       case IF:
       case WHILE:
       case FOR:
+      case DEF:
       case FUNC:
       case ID:
         ;
@@ -116,14 +117,14 @@ public class MyNewGrammar implements MyNewGrammarConstants {
       label_2:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 24:
+        case 26:
           ;
           break;
         default:
           jj_la1[3] = jj_gen;
           break label_2;
         }
-        jj_consume_token(24);
+        jj_consume_token(26);
         n = E();
                 node.addChild(n);
       }
@@ -203,6 +204,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
       case IF:
       case WHILE:
       case FOR:
+      case DEF:
       case FUNC:
       case ID:
         ;
@@ -226,6 +228,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
         case IF:
         case WHILE:
         case FOR:
+        case DEF:
         case FUNC:
         case ID:
           ;
@@ -267,6 +270,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
       case IF:
       case WHILE:
       case FOR:
+      case DEF:
       case FUNC:
       case ID:
         ;
@@ -313,6 +317,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
       case IF:
       case WHILE:
       case FOR:
+      case DEF:
       case FUNC:
       case ID:
         ;
@@ -344,6 +349,19 @@ public class MyNewGrammar implements MyNewGrammarConstants {
           anode.setVarName(t.image);
           anode.addChild(n);
           {if (true) return anode;}
+    throw new Error("Missing return statement in function");
+  }
+
+  static final public DefNode defstmt() throws ParseException {
+  Token t, type;
+  DefNode dnode = new DefNode();
+    jj_consume_token(DEF);
+    t = jj_consume_token(ID);
+    jj_consume_token(COLON);
+    type = jj_consume_token(TYPE);
+    jj_consume_token(SEMI);
+          dnode.setVarName(t.image, type.image);
+          {if (true) return dnode;}
     throw new Error("Missing return statement in function");
   }
 
@@ -396,22 +414,30 @@ public class MyNewGrammar implements MyNewGrammarConstants {
       case FOR:
         n = forStmt();
         break;
-      case ID:
-        n = assignStmt();
-        break;
-      case RARROW:
-        n = readStmt();
-        break;
-      case LARROW:
-        n = writeStmt();
-        break;
-      case FUNC:
-        FuncDef();
-        break;
       default:
         jj_la1[13] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
+        if (jj_2_2(2)) {
+          n = assignStmt();
+        } else if (jj_2_3(2)) {
+          n = defstmt();
+        } else {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case RARROW:
+            n = readStmt();
+            break;
+          case LARROW:
+            n = writeStmt();
+            break;
+          default:
+            jj_la1[14] = jj_gen;
+            if (jj_2_4(2)) {
+              FuncDef();
+            } else {
+              jj_consume_token(-1);
+              throw new ParseException();
+            }
+          }
+        }
       }
     } catch (ParseException e) {
   System.out.println(e);
@@ -444,20 +470,20 @@ public class MyNewGrammar implements MyNewGrammarConstants {
       label_7:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 24:
+        case 26:
           ;
           break;
         default:
-          jj_la1[14] = jj_gen;
+          jj_la1[15] = jj_gen;
           break label_7;
         }
-        jj_consume_token(24);
+        jj_consume_token(26);
         t = jj_consume_token(ID);
                          fd.getParams().add(t.image);
       }
       break;
     default:
-      jj_la1[15] = jj_gen;
+      jj_la1[16] = jj_gen;
       ;
     }
     jj_consume_token(RP);
@@ -469,12 +495,13 @@ public class MyNewGrammar implements MyNewGrammarConstants {
       case IF:
       case WHILE:
       case FOR:
+      case DEF:
       case FUNC:
       case ID:
         ;
         break;
       default:
-        jj_la1[16] = jj_gen;
+        jj_la1[17] = jj_gen;
         break label_8;
       }
       an = stmt();
@@ -493,14 +520,68 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     finally { jj_save(0, xla); }
   }
 
+  static private boolean jj_2_2(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_2(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(1, xla); }
+  }
+
+  static private boolean jj_2_3(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_3(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(2, xla); }
+  }
+
+  static private boolean jj_2_4(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_4(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(3, xla); }
+  }
+
+  static private boolean jj_3R_12() {
+    if (jj_scan_token(FUNC)) return true;
+    if (jj_scan_token(ID)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_10() {
+    if (jj_scan_token(ID)) return true;
+    if (jj_scan_token(ASSIGN)) return true;
+    return false;
+  }
+
   static private boolean jj_3R_9() {
     if (jj_scan_token(ID)) return true;
     if (jj_scan_token(LP)) return true;
     return false;
   }
 
+  static private boolean jj_3_4() {
+    if (jj_3R_12()) return true;
+    return false;
+  }
+
   static private boolean jj_3_1() {
     if (jj_3R_9()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_2() {
+    if (jj_3R_10()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_3() {
+    if (jj_3R_11()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_11() {
+    if (jj_scan_token(DEF)) return true;
+    if (jj_scan_token(ID)) return true;
     return false;
   }
 
@@ -516,15 +597,15 @@ public class MyNewGrammar implements MyNewGrammarConstants {
   static private Token jj_scanpos, jj_lastpos;
   static private int jj_la;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[17];
+  static final private int[] jj_la1 = new int[18];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0xd93000,0x20,0x40,0x1000000,0x800280,0x280,0x800000,0xd93000,0xd93000,0x20000,0xd93000,0x8000,0xd93000,0xd93000,0x1000000,0x800000,0xd93000,};
+      jj_la1_0 = new int[] {0x3593000,0x20,0x40,0x4000000,0x2000280,0x280,0x2000000,0x3593000,0x3593000,0x20000,0x3593000,0x8000,0x3593000,0x190000,0x3000,0x4000000,0x2000000,0x3593000,};
    }
-  static final private JJCalls[] jj_2_rtns = new JJCalls[1];
+  static final private JJCalls[] jj_2_rtns = new JJCalls[4];
   static private boolean jj_rescan = false;
   static private int jj_gc = 0;
 
@@ -546,7 +627,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 17; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -561,7 +642,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 17; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -579,7 +660,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 17; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -590,7 +671,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 17; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -607,7 +688,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 17; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -617,7 +698,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 17; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -729,12 +810,12 @@ public class MyNewGrammar implements MyNewGrammarConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[25];
+    boolean[] la1tokens = new boolean[27];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 17; i++) {
+    for (int i = 0; i < 18; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -743,7 +824,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
         }
       }
     }
-    for (int i = 0; i < 25; i++) {
+    for (int i = 0; i < 27; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
@@ -770,7 +851,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
 
   static private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 4; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -778,6 +859,9 @@ public class MyNewGrammar implements MyNewGrammarConstants {
           jj_la = p.arg; jj_lastpos = jj_scanpos = p.first;
           switch (i) {
             case 0: jj_3_1(); break;
+            case 1: jj_3_2(); break;
+            case 2: jj_3_3(); break;
+            case 3: jj_3_4(); break;
           }
         }
         p = p.next;

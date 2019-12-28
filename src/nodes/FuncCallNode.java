@@ -40,7 +40,8 @@ public class FuncCallNode extends ExpressionNode {
 		context.startFunction();
 		context.getVars().putAll(tmp);
 		f.root.execute(context);
-		double res = context.getVars().get("ret");
+//		double res = context.getVars().get("ret");
+		Object res = context.getVars().get("ret");
 		context.endFunction();
 		return res;
 	}

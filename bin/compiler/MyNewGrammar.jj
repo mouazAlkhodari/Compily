@@ -63,6 +63,8 @@ TOKEN :
 | < WHILE: "@" >
 | < FOR: "&" >
 | < CMP: ">" | "<" | ">=" | "<=" | "=" | "<>" >
+| < DEF: "def" >
+| < TYPE: "int"|"char"|"float"|"string">
 | < FUNC: "func" >
 | < ID: (["a"-"z"]|["A"-"Z"])(["a"-"z"]|["A"-"Z"]|["0"-"9"])* >
 }
@@ -255,6 +257,19 @@ AssignNode assignStmt():
 	}
 }
 
+DefNode defstmt():
+{
+  Token t, type;
+  DefNode dnode = new DefNode();
+}
+{
+	(<DEF> t=<ID> <COLON> type=<TYPE> < SEMI >)
+	{
+	  dnode.setVarName(t.image, type.image);
+	  return dnode;
+	}
+}
+
 ReadNode readStmt():
 {
   ReadNode n = new ReadNode();
@@ -305,8 +320,8 @@ AbstractTreeNode stmt():
   try
   {
   (
-    n = ifStmt() | n = whileStmt() | n = forStmt() | n = assignStmt() | n = readStmt()
-|  n = writeStmt() | FuncDef()
+    n = ifStmt() | n = whileStmt() | n = forStmt() | LOOKAHEAD(2) n = assignStmt() | LOOKAHEAD(2) n = defstmt() | n = readStmt()
+|  n = writeStmt() | LOOKAHEAD(2) FuncDef()
 
 )
 }
