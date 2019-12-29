@@ -30,7 +30,13 @@ public class ConstantNode extends ExpressionNode {
 			}
 			catch (NumberFormatException ee)
 			{
-				throw new RuntimeException("Invalid Number Type man !!!");
+				if(!value.matches(".*\\d.*")){
+					this.value = value;
+				}
+				else
+				{
+					throw new RuntimeException("Invalid Constant Type man !!!");
+				}
 			}
 		}
 	}
@@ -44,7 +50,12 @@ public class ConstantNode extends ExpressionNode {
 	@Override
 	public Object convert(Context context) {
 		// TODO Auto-generated method stub
-		return value + "";
+		if(value instanceof String){
+			return  "\""+value+"\"";
+		}
+		else{
+			return value + "";
+		}
 	}
 
 }

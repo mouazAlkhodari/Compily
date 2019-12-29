@@ -113,20 +113,21 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case NUM:
     case LP:
+    case COTATION:
     case ID:
       n = E();
                            node.addChild(n);
       label_2:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 26:
+        case 27:
           ;
           break;
         default:
           jj_la1[3] = jj_gen;
           break label_2;
         }
-        jj_consume_token(26);
+        jj_consume_token(27);
         n = E();
                 node.addChild(n);
       }
@@ -143,30 +144,40 @@ public class MyNewGrammar implements MyNewGrammarConstants {
   }
 
   static final public ExpressionNode N() throws ParseException {
-  Token t1 = null, t2 = null;
+  Token t1 = null, t2 = null, t3 = null;
   ExpressionNode n= null;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case NUM:
       t1 = jj_consume_token(NUM);
       break;
-    case LP:
-      jj_consume_token(LP);
-      n = E();
-      jj_consume_token(RP);
-      break;
     default:
       jj_la1[5] = jj_gen;
       if (jj_2_1(2)) {
-        n = FuncCall();
+        jj_consume_token(COTATION);
+        t3 = jj_consume_token(ID);
+        jj_consume_token(COTATION);
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case ID:
-          t2 = jj_consume_token(ID);
+        case LP:
+          jj_consume_token(LP);
+          n = E();
+          jj_consume_token(RP);
           break;
         default:
           jj_la1[6] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
+          if (jj_2_2(2)) {
+            n = FuncCall();
+          } else {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case ID:
+              t2 = jj_consume_token(ID);
+              break;
+            default:
+              jj_la1[7] = jj_gen;
+              jj_consume_token(-1);
+              throw new ParseException();
+            }
+          }
         }
       }
     }
@@ -180,9 +191,17 @@ public class MyNewGrammar implements MyNewGrammarConstants {
         {if (true) return n;}
     else
     {
-      VariableNode vn = new VariableNode();
-      vn.setName(t2.image);
-      {if (true) return vn;}
+
+      if(t2 != null){
+          VariableNode vn = new VariableNode();
+          vn.setName(t2.image);
+          {if (true) return vn;}
+      }
+      else{
+          ConstantNode cn = new ConstantNode();
+          cn.setValue(t3.image);
+          {if (true) return cn;}
+      }
     }
     throw new Error("Missing return statement in function");
   }
@@ -212,7 +231,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
         ;
         break;
       default:
-        jj_la1[7] = jj_gen;
+        jj_la1[8] = jj_gen;
         break label_3;
       }
     }
@@ -236,13 +255,13 @@ public class MyNewGrammar implements MyNewGrammarConstants {
           ;
           break;
         default:
-          jj_la1[8] = jj_gen;
+          jj_la1[9] = jj_gen;
           break label_4;
         }
       }
       break;
     default:
-      jj_la1[9] = jj_gen;
+      jj_la1[10] = jj_gen;
       ;
     }
     jj_consume_token(END);
@@ -278,7 +297,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
         ;
         break;
       default:
-        jj_la1[10] = jj_gen;
+        jj_la1[11] = jj_gen;
         break label_5;
       }
     }
@@ -306,7 +325,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
       n4 = E();
       break;
     default:
-      jj_la1[11] = jj_gen;
+      jj_la1[12] = jj_gen;
       ;
     }
     label_6:
@@ -325,7 +344,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
         ;
         break;
       default:
-        jj_la1[12] = jj_gen;
+        jj_la1[13] = jj_gen;
         break label_6;
       }
     }
@@ -417,10 +436,10 @@ public class MyNewGrammar implements MyNewGrammarConstants {
         n = forStmt();
         break;
       default:
-        jj_la1[13] = jj_gen;
-        if (jj_2_2(2)) {
+        jj_la1[14] = jj_gen;
+        if (jj_2_3(2)) {
           n = assignStmt();
-        } else if (jj_2_3(2)) {
+        } else if (jj_2_4(2)) {
           n = defstmt();
         } else {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -431,8 +450,8 @@ public class MyNewGrammar implements MyNewGrammarConstants {
             n = writeStmt();
             break;
           default:
-            jj_la1[14] = jj_gen;
-            if (jj_2_4(2)) {
+            jj_la1[15] = jj_gen;
+            if (jj_2_5(2)) {
               FuncDef();
             } else {
               jj_consume_token(-1);
@@ -458,6 +477,9 @@ public class MyNewGrammar implements MyNewGrammarConstants {
 
   static final public void FuncDef() throws ParseException {
   FunctionDef fd = new FunctionDef();
+
+//  FunctionDef innerfd = new FunctionDef();
+
   Token name,t = null;
   BlockNode n = new BlockNode();
   AbstractTreeNode an;
@@ -472,20 +494,20 @@ public class MyNewGrammar implements MyNewGrammarConstants {
       label_7:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 26:
+        case 27:
           ;
           break;
         default:
-          jj_la1[15] = jj_gen;
+          jj_la1[16] = jj_gen;
           break label_7;
         }
-        jj_consume_token(26);
+        jj_consume_token(27);
         t = jj_consume_token(ID);
                          fd.getParams().add(t.image);
       }
       break;
     default:
-      jj_la1[16] = jj_gen;
+      jj_la1[17] = jj_gen;
       ;
     }
     jj_consume_token(RP);
@@ -503,11 +525,11 @@ public class MyNewGrammar implements MyNewGrammarConstants {
         ;
         break;
       default:
-        jj_la1[17] = jj_gen;
+        jj_la1[18] = jj_gen;
         break label_8;
       }
       an = stmt();
-                  n.addChild(an);
+                         n.addChild(an);
     }
     jj_consume_token(END);
           fd.setName(name.image);
@@ -543,35 +565,26 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     finally { jj_save(3, xla); }
   }
 
+  static private boolean jj_2_5(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_5(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(4, xla); }
+  }
+
+  static private boolean jj_3_3() {
+    if (jj_3R_10()) return true;
+    return false;
+  }
+
   static private boolean jj_3R_10() {
     if (jj_scan_token(ID)) return true;
     if (jj_scan_token(ASSIGN)) return true;
     return false;
   }
 
-  static private boolean jj_3R_9() {
-    if (jj_scan_token(ID)) return true;
-    if (jj_scan_token(LP)) return true;
-    return false;
-  }
-
-  static private boolean jj_3_4() {
+  static private boolean jj_3_5() {
     if (jj_3R_12()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_1() {
-    if (jj_3R_9()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_2() {
-    if (jj_3R_10()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_3() {
-    if (jj_3R_11()) return true;
     return false;
   }
 
@@ -583,6 +596,28 @@ public class MyNewGrammar implements MyNewGrammarConstants {
 
   static private boolean jj_3R_12() {
     if (jj_scan_token(FUNC)) return true;
+    if (jj_scan_token(ID)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_4() {
+    if (jj_3R_11()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_2() {
+    if (jj_3R_9()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_9() {
+    if (jj_scan_token(ID)) return true;
+    if (jj_scan_token(LP)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_1() {
+    if (jj_scan_token(COTATION)) return true;
     if (jj_scan_token(ID)) return true;
     return false;
   }
@@ -599,15 +634,15 @@ public class MyNewGrammar implements MyNewGrammarConstants {
   static private Token jj_scanpos, jj_lastpos;
   static private int jj_la;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[18];
+  static final private int[] jj_la1 = new int[19];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x3593000,0x20,0x40,0x4000000,0x2000280,0x280,0x2000000,0x3593000,0x3593000,0x20000,0x3593000,0x8000,0x3593000,0x190000,0x3000,0x4000000,0x2000000,0x3593000,};
+      jj_la1_0 = new int[] {0x6993000,0x20,0x40,0x8000000,0x4400280,0x80,0x200,0x4000000,0x6993000,0x6993000,0x20000,0x6993000,0x8000,0x6993000,0x190000,0x3000,0x8000000,0x4000000,0x6993000,};
    }
-  static final private JJCalls[] jj_2_rtns = new JJCalls[4];
+  static final private JJCalls[] jj_2_rtns = new JJCalls[5];
   static private boolean jj_rescan = false;
   static private int jj_gc = 0;
 
@@ -629,7 +664,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -644,7 +679,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -662,7 +697,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -673,7 +708,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -690,7 +725,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -700,7 +735,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -812,12 +847,12 @@ public class MyNewGrammar implements MyNewGrammarConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[27];
+    boolean[] la1tokens = new boolean[28];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 18; i++) {
+    for (int i = 0; i < 19; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -826,7 +861,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
         }
       }
     }
-    for (int i = 0; i < 27; i++) {
+    for (int i = 0; i < 28; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
@@ -853,7 +888,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
 
   static private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 5; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -864,6 +899,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
             case 1: jj_3_2(); break;
             case 2: jj_3_3(); break;
             case 3: jj_3_4(); break;
+            case 4: jj_3_5(); break;
           }
         }
         p = p.next;

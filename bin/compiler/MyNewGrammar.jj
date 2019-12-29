@@ -65,6 +65,7 @@ TOKEN :
 | < WHILE: "@" >
 | < FOR: "&" >
 | < CMP: ">" | "<" | ">=" | "<=" | "=" | "<>" >
+| < COTATION : "\"">
 | < DEF: "def" >
 | < TYPE: "int"|"char"|"float"|"string" | "double">
 | < FUNC: "func" >
@@ -146,14 +147,16 @@ FuncCallNode FuncCall():
 
 ExpressionNode N():
 {
-  Token t1 = null, t2 = null;
+  Token t1 = null, t2 = null, t3 = null;
   ExpressionNode n= null;
 }
 {
   (
-    t1 = < NUM > | < LP > n = E() < RP >
-  | LOOKAHEAD(2) n = FuncCall()
-     | t2 = < ID >
+    t1 = < NUM >
+    | LOOKAHEAD(2) <COTATION> t3 = <ID> <COTATION>
+    | < LP > n = E() < RP >
+    | LOOKAHEAD(2) n = FuncCall()
+    | t2 = < ID >
   )
   {
     if (t1 != null)
@@ -166,9 +169,17 @@ ExpressionNode N():
     	return n;
     else
     {
-      VariableNode vn = new VariableNode();
-      vn.setName(t2.image);
-      return vn;
+
+      if(t2 != null){
+          VariableNode vn = new VariableNode();
+          vn.setName(t2.image);
+          return vn;
+      }
+      else{
+          ConstantNode cn = new ConstantNode();
+          cn.setValue(t3.image);
+          return cn;
+      }
     }
   }
 }
