@@ -9,9 +9,13 @@ public class Context {
 
 	Stack<HashMap<String, Object>> varStack = new Stack<HashMap<String,Object>>();
 
-	public void startFunction() {
+	public void startFunction(HashMap<String,Object> tmp) {
+		HashMap<String,Object> tempvars = new HashMap<String,Object>(vars);
 		varStack.push(vars);
-		vars = new HashMap<String, Object>();
+		vars = tempvars;
+		tmp.forEach((key,value)->{
+			vars.put(key,value);
+		});
 	}
 
 	public void endFunction() {

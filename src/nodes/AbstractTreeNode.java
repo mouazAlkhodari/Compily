@@ -5,11 +5,14 @@ import java.util.ArrayList;
 public abstract class AbstractTreeNode {
 	
 	protected String name;
-	
+
 	public String getName() {
 		return name;
 	}
-	
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	protected ArrayList<AbstractTreeNode> children = new ArrayList<AbstractTreeNode>();
 	
 	public ArrayList<AbstractTreeNode> getChildren() {

@@ -2,7 +2,7 @@ package nodes;
 
 import java.util.ArrayList;
 
-public class FunctionDef {
+public class FunctionDefNode extends AbstractTreeNode {
 
 	String name;
 
@@ -25,4 +25,14 @@ public class FunctionDef {
 		return params;
 	}
 
+	@Override
+	public Object execute(Context context) {
+		context.getVars().put(name, this);
+		return null;
+	}
+
+	@Override
+	public Object convert(Context context) {
+		return null;
+	}
 }

@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class MyNewGrammar
 {
 
-  static HashMap<String,FunctionDef> functions = new HashMap<String,FunctionDef>(); 
+//  static HashMap<String,FunctionDefNode> functions = new HashMap<String,FunctionDefNode>();
   
   public static void main(String args []) throws ParseException,FileNotFoundException
   {
@@ -140,7 +140,7 @@ FuncCallNode FuncCall():
   ("," n = E() {node.addChild(n); })*)? < RP >
   {
     node.setFunctionName(t.image);
-    node.setFunctions(functions);
+//    node.setFunctions(functions);
     return node;
   }
 }
@@ -334,7 +334,7 @@ AbstractTreeNode stmt():
   {
   (
     n = ifStmt() | n = whileStmt() | n = forStmt() | LOOKAHEAD(2) n = assignStmt() | LOOKAHEAD(2) n = defstmt() | n = readStmt()
-|  n = writeStmt() | LOOKAHEAD(2) FuncDef()
+|  n = writeStmt() | LOOKAHEAD(2) n = FuncDef()
 
 )
 }
@@ -355,9 +355,9 @@ catch(ParseException e)
 }
 }
 
-void FuncDef():
+FunctionDefNode FuncDef():
 {
-  FunctionDef fd = new FunctionDef();
+  FunctionDefNode fd = new FunctionDefNode();
   Token name,t = null;
   BlockNode n = new BlockNode();
   AbstractTreeNode an;
@@ -376,6 +376,6 @@ void FuncDef():
 	{
 	  fd.setName(name.image);
 	  fd.setRoot(n);
-	  functions.put(fd.getName(),fd);
+      return fd;
 	}
 }

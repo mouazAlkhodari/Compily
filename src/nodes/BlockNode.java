@@ -7,11 +7,15 @@ public class BlockNode extends AbstractTreeNode {
 	{
 		return "Block";
 	}
-	
+
 	@Override
 	public Object execute(Context context) {
-		for(AbstractTreeNode n : children)
-			n.execute(context);
+		children.forEach((n)->{
+			if(n instanceof FunctionDefNode)n.execute(context);
+		});
+		children.forEach((n)->{
+			if(!(n instanceof FunctionDefNode))n.execute(context);
+		});
 		return null;
 	}
 

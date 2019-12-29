@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class MyNewGrammar implements MyNewGrammarConstants {
 
-  static HashMap<String,FunctionDef> functions = new HashMap<String,FunctionDef>();
+//  static HashMap<String,FunctionDefNode> functions = new HashMap<String,FunctionDefNode>();
 
   public static void main(String args []) throws ParseException,FileNotFoundException
   {
@@ -138,7 +138,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     }
     jj_consume_token(RP);
     node.setFunctionName(t.image);
-    node.setFunctions(functions);
+//    node.setFunctions(functions);
     {if (true) return node;}
     throw new Error("Missing return statement in function");
   }
@@ -452,7 +452,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
           default:
             jj_la1[15] = jj_gen;
             if (jj_2_5(2)) {
-              FuncDef();
+              n = FuncDef();
             } else {
               jj_consume_token(-1);
               throw new ParseException();
@@ -475,11 +475,8 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     throw new Error("Missing return statement in function");
   }
 
-  static final public void FuncDef() throws ParseException {
-  FunctionDef fd = new FunctionDef();
-
-//  FunctionDef innerfd = new FunctionDef();
-
+  static final public FunctionDefNode FuncDef() throws ParseException {
+  FunctionDefNode fd = new FunctionDefNode();
   Token name,t = null;
   BlockNode n = new BlockNode();
   AbstractTreeNode an;
@@ -529,12 +526,13 @@ public class MyNewGrammar implements MyNewGrammarConstants {
         break label_8;
       }
       an = stmt();
-                         n.addChild(an);
+                  n.addChild(an);
     }
     jj_consume_token(END);
           fd.setName(name.image);
           fd.setRoot(n);
-          functions.put(fd.getName(),fd);
+      {if (true) return fd;}
+    throw new Error("Missing return statement in function");
   }
 
   static private boolean jj_2_1(int xla) {
@@ -594,14 +592,14 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     return false;
   }
 
-  static private boolean jj_3R_12() {
-    if (jj_scan_token(FUNC)) return true;
-    if (jj_scan_token(ID)) return true;
+  static private boolean jj_3_4() {
+    if (jj_3R_11()) return true;
     return false;
   }
 
-  static private boolean jj_3_4() {
-    if (jj_3R_11()) return true;
+  static private boolean jj_3R_12() {
+    if (jj_scan_token(FUNC)) return true;
+    if (jj_scan_token(ID)) return true;
     return false;
   }
 
