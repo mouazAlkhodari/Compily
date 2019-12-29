@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3728a59c-4a0e-4dc9-b748-98ae6cc47401" name="Default Changelist" comment="" />
+    <list default="true" id="3728a59c-4a0e-4dc9-b748-98ae6cc47401" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/nodes/NegationConditionNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/compiler/MyNewGrammar$JJCalls.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/compiler/MyNewGrammar$JJCalls.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/compiler/MyNewGrammar$LookaheadSuccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/compiler/MyNewGrammar$LookaheadSuccess.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/compiler/MyNewGrammar.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/compiler/MyNewGrammar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/compiler/MyNewGrammar.jj" beforeDir="false" afterPath="$PROJECT_DIR$/bin/compiler/MyNewGrammar.jj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/compiler/MyNewGrammarConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/compiler/MyNewGrammarConstants.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/compiler/MyNewGrammarTokenManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/compiler/MyNewGrammarTokenManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/nodes/ConditionNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/nodes/ConditionNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/MyNewGrammar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/MyNewGrammar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/MyNewGrammar.jj" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/MyNewGrammar.jj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/MyNewGrammarConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/MyNewGrammarConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/MyNewGrammarTokenManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/MyNewGrammarTokenManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nodes/ConditionNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nodes/ConditionTermNode.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,51 +38,73 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="88" />
+          <entry key="java" value="93" />
           <entry key="jj" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="88" />
+          <entry key="JAVA" value="93" />
           <entry key="JavaCC" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="2664" />
-          <entry key="jj" value="918" />
+          <entry key="java" value="2668" />
+          <entry key="jj" value="974" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="2664" />
-          <entry key="JavaCC" value="918" />
+          <entry key="JAVA" value="2668" />
+          <entry key="JavaCC" value="974" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/compiler/MyNewGrammar.jj">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="377" column="20" lean-forward="true" selection-start-line="377" selection-start-column="20" selection-end-line="377" selection-end-column="20" />
+            <state relative-caret-position="1267">
+              <caret line="379" column="13" selection-start-line="379" selection-start-column="13" selection-end-line="379" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/nodes/ConditionTermNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nodes/AbstractTreeNode.java">
+        <entry file="file://$PROJECT_DIR$/src/nodes/ConditionNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
-              <folding>
-                <element signature="e#183#184#0" expanded="true" />
-                <element signature="e#206#207#0" expanded="true" />
-                <element signature="e#224#242#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="38">
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nodes/NegationConditionNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="38">
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nodes/ConstantNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="38">
+              <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -169,19 +206,20 @@
       <list>
         <option value="$PROJECT_DIR$/src/nodes/AssignNode.java" />
         <option value="$PROJECT_DIR$/src/nodes/ReadNode.java" />
-        <option value="$PROJECT_DIR$/src/nodes/ConditionNode.java" />
         <option value="$PROJECT_DIR$/src/compiler/MyNewGrammar.java" />
         <option value="$PROJECT_DIR$/src/nodes/DefNode.java" />
         <option value="$PROJECT_DIR$/src/nodes/ExpressionNode.java" />
         <option value="$PROJECT_DIR$/src/nodes/ForNode.java" />
-        <option value="$PROJECT_DIR$/src/nodes/ConstantNode.java" />
         <option value="$PROJECT_DIR$/src/nodes/AbstractTreeNode.java" />
         <option value="$PROJECT_DIR$/src/nodes/BlockNode.java" />
         <option value="$PROJECT_DIR$/src/nodes/FunctionDef.java" />
         <option value="$PROJECT_DIR$/src/nodes/FunctionDefNode.java" />
         <option value="$PROJECT_DIR$/src/nodes/Context.java" />
         <option value="$PROJECT_DIR$/src/nodes/FuncCallNode.java" />
+        <option value="$PROJECT_DIR$/src/nodes/ConstantNode.java" />
+        <option value="$PROJECT_DIR$/src/nodes/ConditionNode.java" />
         <option value="$PROJECT_DIR$/src/compiler/MyNewGrammar.jj" />
+        <option value="$PROJECT_DIR$/src/nodes/ConditionTermNode.java" />
       </list>
     </option>
   </component>
@@ -238,13 +276,18 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1577613823939" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1577615541361" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\hp\Desktop\SAMI\Faculty of Information Technology\Fourth_Year\الفصل الأول\مترجمات\عملي\ClassSample\src\nodes" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -293,7 +336,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39734000" />
+    <option name="totallyTimeSpent" value="41427000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -318,7 +361,7 @@
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3715221" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3715221" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39934534" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -421,20 +464,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/compiler/MyNewGrammar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="19" selection-start-line="19" selection-end-line="19" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes/ConditionNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="28" column="18" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/nodes/IfNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
@@ -499,13 +528,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1083">
           <caret line="67" column="95" selection-start-line="67" selection-start-column="95" selection-end-line="67" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes/ConstantNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
         </state>
       </provider>
     </entry>
@@ -575,10 +597,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes/ConstantNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes/ConditionNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes/NegationConditionNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/compiler/MyNewGrammar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="503" column="28" selection-start-line="503" selection-start-column="28" selection-end-line="503" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/compiler/MyNewGrammar.jj">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="377" column="20" lean-forward="true" selection-start-line="377" selection-start-column="20" selection-end-line="377" selection-end-column="20" />
+        <state relative-caret-position="1267">
+          <caret line="379" column="13" selection-start-line="379" selection-start-column="13" selection-end-line="379" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes/ConditionTermNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
         </state>
       </provider>
     </entry>

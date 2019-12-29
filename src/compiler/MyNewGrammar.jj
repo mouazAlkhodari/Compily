@@ -65,6 +65,9 @@ TOKEN :
 | < WHILE: "@" >
 | < FOR: "&" >
 | < CMP: ">" | "<" | ">=" | "<=" | "=" | "<>" >
+| < AND : "$">
+| < OR : "|">
+| < NOT : "~" >
 | < COTATION : "\"">
 | < DEF: "def" >
 | < TYPE: "int"|"char"|"float"|"string" | "double">
@@ -311,17 +314,72 @@ WriteNode writeStmt():
 
 ConditionNode condition():
 {
-  ConditionNode n = new ConditionNode();
-  AbstractTreeNode n1,n2;
-  Token t;
+  Token t = null;
+  ConditionNode n1, n2 = null;
 }
 {
-	n1 = E() t = < CMP > n2 = E()
+  n1 = conditionF() (t = < OR > n2 = condition() )?
+  {
+    if (t == null)
+    	return n1;
+    else
+    {
+      	ConditionNode en = new ConditionNode();
+      	en.addChild(n1);
+      	en.addChild(n2);
+      	en.setOperator(t.image);
+      	return en;
+    }
+  }
+}
+
+ConditionNode conditionF():
+{
+  Token t = null;
+  ConditionNode n1, n2 = null;
+}
+{
+  n1 = conditionN() (t = < AND > n2 = conditionF() )?
+  {
+    if (t == null)
+    	return n1;
+    else
+    {
+      	ConditionNode en = new ConditionNode();
+      	en.addChild(n1);
+      	en.addChild(n2);
+      	en.setOperator(t.image);
+      	return en;
+    }
+  }
+}
+
+ConditionNode conditionN():
+{
+  ConditionNode n = new ConditionNode();
+  AbstractTreeNode n1 = null,n2 = null;
+  Token t1 = null, t2 = null;
+}
+{
+    (
+        LOOKAHEAD(3) (t2 = < NOT >)? <LP> n = condition() <RP>
+        | LOOKAHEAD(3) <LP> n = condition() <RP>
+        | n1 = E() t1 = < CMP > n2 = E()
+    )
 	{
-	  n.addChild(n1);
-	  n.addChild(n2);
-	  n.setOperator(t.image);
-	  return n;
+	    if(t1 != null){
+	      ConditionTermNode ne = new ConditionTermNode();
+          ne.addChild(n1);
+          ne.addChild(n2);
+          ne.setOperator(t1.image);
+          return ne;
+        }
+        else if(t2 != null) {
+            NegationConditionNode ne = new NegationConditionNode();
+            ne.addChild(n);
+            return ne;
+        }
+        else return n;
 	} 
 }
 

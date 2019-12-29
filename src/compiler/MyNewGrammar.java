@@ -120,14 +120,14 @@ public class MyNewGrammar implements MyNewGrammarConstants {
       label_2:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 27:
+        case 30:
           ;
           break;
         default:
           jj_la1[3] = jj_gen;
           break label_2;
         }
-        jj_consume_token(27);
+        jj_consume_token(30);
         n = E();
                 node.addChild(n);
       }
@@ -409,16 +409,106 @@ public class MyNewGrammar implements MyNewGrammarConstants {
   }
 
   static final public ConditionNode condition() throws ParseException {
+  Token t = null;
+  ConditionNode n1, n2 = null;
+    n1 = conditionF();
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case OR:
+      t = jj_consume_token(OR);
+      n2 = condition();
+      break;
+    default:
+      jj_la1[14] = jj_gen;
+      ;
+    }
+    if (t == null)
+        {if (true) return n1;}
+    else
+    {
+        ConditionNode en = new ConditionNode();
+        en.addChild(n1);
+        en.addChild(n2);
+        en.setOperator(t.image);
+        {if (true) return en;}
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  static final public ConditionNode conditionF() throws ParseException {
+  Token t = null;
+  ConditionNode n1, n2 = null;
+    n1 = conditionN();
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case AND:
+      t = jj_consume_token(AND);
+      n2 = conditionF();
+      break;
+    default:
+      jj_la1[15] = jj_gen;
+      ;
+    }
+    if (t == null)
+        {if (true) return n1;}
+    else
+    {
+        ConditionNode en = new ConditionNode();
+        en.addChild(n1);
+        en.addChild(n2);
+        en.setOperator(t.image);
+        {if (true) return en;}
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  static final public ConditionNode conditionN() throws ParseException {
   ConditionNode n = new ConditionNode();
-  AbstractTreeNode n1,n2;
-  Token t;
-    n1 = E();
-    t = jj_consume_token(CMP);
-    n2 = E();
-          n.addChild(n1);
-          n.addChild(n2);
-          n.setOperator(t.image);
-          {if (true) return n;}
+  AbstractTreeNode n1 = null,n2 = null;
+  Token t1 = null, t2 = null;
+    if (jj_2_3(3)) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case NOT:
+        t2 = jj_consume_token(NOT);
+        break;
+      default:
+        jj_la1[16] = jj_gen;
+        ;
+      }
+      jj_consume_token(LP);
+      n = condition();
+      jj_consume_token(RP);
+    } else if (jj_2_4(3)) {
+      jj_consume_token(LP);
+      n = condition();
+      jj_consume_token(RP);
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case NUM:
+      case LP:
+      case COTATION:
+      case ID:
+        n1 = E();
+        t1 = jj_consume_token(CMP);
+        n2 = E();
+        break;
+      default:
+        jj_la1[17] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+            if(t1 != null){
+              ConditionTermNode ne = new ConditionTermNode();
+          ne.addChild(n1);
+          ne.addChild(n2);
+          ne.setOperator(t1.image);
+          {if (true) return ne;}
+        }
+        else if(t2 != null) {
+            NegationConditionNode ne = new NegationConditionNode();
+            ne.addChild(n);
+            {if (true) return ne;}
+        }
+        else {if (true) return n;}
     throw new Error("Missing return statement in function");
   }
 
@@ -436,10 +526,10 @@ public class MyNewGrammar implements MyNewGrammarConstants {
         n = forStmt();
         break;
       default:
-        jj_la1[14] = jj_gen;
-        if (jj_2_3(2)) {
+        jj_la1[18] = jj_gen;
+        if (jj_2_5(2)) {
           n = assignStmt();
-        } else if (jj_2_4(2)) {
+        } else if (jj_2_6(2)) {
           n = defstmt();
         } else {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -450,8 +540,8 @@ public class MyNewGrammar implements MyNewGrammarConstants {
             n = writeStmt();
             break;
           default:
-            jj_la1[15] = jj_gen;
-            if (jj_2_5(2)) {
+            jj_la1[19] = jj_gen;
+            if (jj_2_7(2)) {
               n = FuncDef();
             } else {
               jj_consume_token(-1);
@@ -491,20 +581,20 @@ public class MyNewGrammar implements MyNewGrammarConstants {
       label_7:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 27:
+        case 30:
           ;
           break;
         default:
-          jj_la1[16] = jj_gen;
+          jj_la1[20] = jj_gen;
           break label_7;
         }
-        jj_consume_token(27);
+        jj_consume_token(30);
         t = jj_consume_token(ID);
                          fd.getParams().add(t.image);
       }
       break;
     default:
-      jj_la1[17] = jj_gen;
+      jj_la1[21] = jj_gen;
       ;
     }
     jj_consume_token(RP);
@@ -522,7 +612,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
         ;
         break;
       default:
-        jj_la1[18] = jj_gen;
+        jj_la1[22] = jj_gen;
         break label_8;
       }
       an = stmt();
@@ -570,41 +660,144 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     finally { jj_save(4, xla); }
   }
 
+  static private boolean jj_2_6(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_6(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(5, xla); }
+  }
+
+  static private boolean jj_2_7(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_7(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(6, xla); }
+  }
+
   static private boolean jj_3_3() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(24)) jj_scanpos = xsp;
+    if (jj_scan_token(LP)) return true;
     if (jj_3R_10()) return true;
     return false;
   }
 
-  static private boolean jj_3R_10() {
+  static private boolean jj_3R_11() {
     if (jj_scan_token(ID)) return true;
     if (jj_scan_token(ASSIGN)) return true;
     return false;
   }
 
-  static private boolean jj_3_5() {
-    if (jj_3R_12()) return true;
+  static private boolean jj_3R_10() {
+    if (jj_3R_14()) return true;
     return false;
   }
 
-  static private boolean jj_3R_11() {
-    if (jj_scan_token(DEF)) return true;
-    if (jj_scan_token(ID)) return true;
+  static private boolean jj_3_7() {
+    if (jj_3R_13()) return true;
     return false;
   }
 
-  static private boolean jj_3_4() {
-    if (jj_3R_11()) return true;
+  static private boolean jj_3R_15() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_3()) {
+    jj_scanpos = xsp;
+    if (jj_3_4()) {
+    jj_scanpos = xsp;
+    if (jj_3R_16()) return true;
+    }
+    }
     return false;
   }
 
-  static private boolean jj_3R_12() {
-    if (jj_scan_token(FUNC)) return true;
-    if (jj_scan_token(ID)) return true;
+  static private boolean jj_3R_21() {
+    if (jj_scan_token(MULT)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_18() {
+    if (jj_3R_20()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_21()) jj_scanpos = xsp;
     return false;
   }
 
   static private boolean jj_3_2() {
     if (jj_3R_9()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_22() {
+    if (jj_scan_token(LP)) return true;
+    if (jj_3R_17()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_1() {
+    if (jj_scan_token(COTATION)) return true;
+    if (jj_scan_token(ID)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_5() {
+    if (jj_3R_11()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_20() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(7)) {
+    jj_scanpos = xsp;
+    if (jj_3_1()) {
+    jj_scanpos = xsp;
+    if (jj_3R_22()) {
+    jj_scanpos = xsp;
+    if (jj_3_2()) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(29)) return true;
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_19() {
+    if (jj_scan_token(PLUS)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_14() {
+    if (jj_3R_15()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_13() {
+    if (jj_scan_token(FUNC)) return true;
+    if (jj_scan_token(ID)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_6() {
+    if (jj_3R_12()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_12() {
+    if (jj_scan_token(DEF)) return true;
+    if (jj_scan_token(ID)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_17() {
+    if (jj_3R_18()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_19()) jj_scanpos = xsp;
     return false;
   }
 
@@ -614,9 +807,15 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     return false;
   }
 
-  static private boolean jj_3_1() {
-    if (jj_scan_token(COTATION)) return true;
-    if (jj_scan_token(ID)) return true;
+  static private boolean jj_3R_16() {
+    if (jj_3R_17()) return true;
+    if (jj_scan_token(CMP)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_4() {
+    if (jj_scan_token(LP)) return true;
+    if (jj_3R_10()) return true;
     return false;
   }
 
@@ -632,15 +831,15 @@ public class MyNewGrammar implements MyNewGrammarConstants {
   static private Token jj_scanpos, jj_lastpos;
   static private int jj_la;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[19];
+  static final private int[] jj_la1 = new int[23];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x6993000,0x20,0x40,0x8000000,0x4400280,0x80,0x200,0x4000000,0x6993000,0x6993000,0x20000,0x6993000,0x8000,0x6993000,0x190000,0x3000,0x8000000,0x4000000,0x6993000,};
+      jj_la1_0 = new int[] {0x34193000,0x20,0x40,0x40000000,0x22000280,0x80,0x200,0x20000000,0x34193000,0x34193000,0x20000,0x34193000,0x8000,0x34193000,0x800000,0x400000,0x1000000,0x22000280,0x190000,0x3000,0x40000000,0x20000000,0x34193000,};
    }
-  static final private JJCalls[] jj_2_rtns = new JJCalls[5];
+  static final private JJCalls[] jj_2_rtns = new JJCalls[7];
   static private boolean jj_rescan = false;
   static private int jj_gc = 0;
 
@@ -662,7 +861,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -677,7 +876,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -695,7 +894,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -706,7 +905,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -723,7 +922,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -733,7 +932,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -845,12 +1044,12 @@ public class MyNewGrammar implements MyNewGrammarConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[28];
+    boolean[] la1tokens = new boolean[31];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 19; i++) {
+    for (int i = 0; i < 23; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -859,7 +1058,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
         }
       }
     }
-    for (int i = 0; i < 28; i++) {
+    for (int i = 0; i < 31; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
@@ -886,7 +1085,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
 
   static private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 7; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -898,6 +1097,8 @@ public class MyNewGrammar implements MyNewGrammarConstants {
             case 2: jj_3_3(); break;
             case 3: jj_3_4(); break;
             case 4: jj_3_5(); break;
+            case 5: jj_3_6(); break;
+            case 6: jj_3_7(); break;
           }
         }
         p = p.next;

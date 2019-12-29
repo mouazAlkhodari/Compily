@@ -45,15 +45,21 @@ public interface MyNewGrammarConstants {
   /** RegularExpression Id. */
   int CMP = 21;
   /** RegularExpression Id. */
-  int COTATION = 22;
+  int AND = 22;
   /** RegularExpression Id. */
-  int DEF = 23;
+  int OR = 23;
   /** RegularExpression Id. */
-  int TYPE = 24;
+  int NOT = 24;
   /** RegularExpression Id. */
-  int FUNC = 25;
+  int COTATION = 25;
   /** RegularExpression Id. */
-  int ID = 26;
+  int DEF = 26;
+  /** RegularExpression Id. */
+  int TYPE = 27;
+  /** RegularExpression Id. */
+  int FUNC = 28;
+  /** RegularExpression Id. */
+  int ID = 29;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -82,6 +88,9 @@ public interface MyNewGrammarConstants {
     "\"@\"",
     "\"&\"",
     "<CMP>",
+    "\"$\"",
+    "\"|\"",
+    "\"~\"",
     "\"\\\"\"",
     "\"def\"",
     "<TYPE>",
