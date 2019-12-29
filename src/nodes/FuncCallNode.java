@@ -49,7 +49,18 @@ public class FuncCallNode extends ExpressionNode {
 	@Override
 	public Object convert(Context context) {
 		// TODO Auto-generated method stub
-		return null;
+
+		FunctionDef f = functions.get(functionName);
+		if(f.getParams().size() > 0){
+			String parms = f.getParams().get(0);
+			for(int i=1;i<f.getParams().size();i++)
+				parms += ", " + f.getParams().get(i);
+
+			return functionName + "("+ parms +")";
+		}
+		else {
+			return functionName + "()";
+		}
 	}
 
 }
