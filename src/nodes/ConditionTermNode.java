@@ -14,7 +14,7 @@ public class ConditionTermNode extends ConditionNode {
 	public String getOperator() {
 		return operator;
 	}
- 
+
 	public void setOperator(String operator) {
 		this.operator = operator;
 	}

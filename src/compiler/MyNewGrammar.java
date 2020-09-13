@@ -10,7 +10,7 @@ public class MyNewGrammar implements MyNewGrammarConstants {
 
   public static void main(String args []) throws ParseException,FileNotFoundException
   {
-    FileInputStream fis = new FileInputStream("C:\u005c\u005cUsers\u005c\u005chp\u005c\u005cDesktop\u005c\u005cSAMI\u005c\u005cFaculty of Information Technology\u005c\u005cFourth_Year\u005c\u005cdeleteCode.txt");
+    FileInputStream fis = new FileInputStream("C:\\Users\\mouaz\\Desktop\\test.txt");
     MyNewGrammar parser = new MyNewGrammar(fis);
     AbstractTreeNode n = start();
 
